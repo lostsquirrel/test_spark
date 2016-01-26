@@ -10,6 +10,7 @@ import freemarker.template.Configuration;
 import spark.ModelAndView;
 import spark.Request;
 import spark.template.freemarker.FreeMarkerEngine;
+import test.spark.utils.JsonUtils;
 
 
 
@@ -20,8 +21,6 @@ public class FreeMarker {
 		Configuration freeMarkerConfiguration = new Configuration();
 		freeMarkerConfiguration.setTemplateLoader(new ClassTemplateLoader(FreeMarker.class, "/"));
 		freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
-		
-
 		
 		// get all post (using HTTP get method)
 		get("/:name", (request, response) -> {
@@ -36,7 +35,7 @@ public class FreeMarker {
 		    } else {
 		        response.status(200);
 		        response.type("application/json");
-		        return attributes;
+		        return JsonUtils.toJsonString(attributes);
 		    }
 		});
 	}
